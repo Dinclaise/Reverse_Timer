@@ -1,3 +1,40 @@
+body {
+    box-sizing: border-box;
+}
+    
+    
+#requestID {
+    width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#minutesID {
+    width: 195px;
+}
+
+#secondsID {
+    width: 195px;
+}
+
+
+.timer-card {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 400px;
+    max-height: 100px;
+}
+
+.description {
+    /* width: 200px; */
+}
+.timer-place {
+display: flex;
+}
+
 .timer-frame {
     display: inline-block;
     width: 300px;

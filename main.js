@@ -1,40 +1,9 @@
-// // import { start } from "repl";
 
-// let target_time =  new Date().getTime() + (1000*3600*86400);
-// let hours, minutes, seconds, milliseconds;
-
-// let countdown = document.getElementById('tiles');
-// // let startBtn = document.getElementById('start');
-
-// // startBtn.addEventListener('click', getCountdown);
-
-// getCountdown();
-
-// setInterval(() => {
-//     getCountdown();
-// }, 1000);
-
-// function getCountdown() {
-//     let current_time = new Date().getTime();
-//     let seconds_left = (target_time - current_time) / 1000;
-
-//     hours = addZero(parseInt(seconds_left / 3600));
-//     seconds_left = seconds_left % 3600;
-
-//     minutes = addZero(parseInt(seconds_left / 60));
-//     seconds = addZero(parseInt(seconds_left % 60));
-
-//     countdown.textContent = hours + ": " + minutes + ": " + seconds; 
-
-// }
-
-// function addZero(n){
-//     return n < 10 ? '0' : n;
-// }
 // console.log(countdown);
 let id = 1;
 const min = document.getElementById('minutesID');
 const sec = document.getElementById('secondsID');
+const text = document.getElementById('requestID');
 
 const startBtn = document.getElementById('start');
 // const deleteBtn = document.getElementById('delete');
@@ -67,6 +36,12 @@ const makeTimer = secondsAcc => {
     clock.textContent = clockHour + ': ' + clockMin + ': ' + clockSec;
     timer.appendChild(clock);
 
+    const description = document.createElement('p');
+    description.textContent = text.value;
+    timer.insertBefore(description, timer.firstElementChild);
+
+
+ // buttons
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
     timer.appendChild(deleteBtn);
@@ -78,17 +53,45 @@ const makeTimer = secondsAcc => {
     console.log(timer);
 
     document.body.insertBefore(timer, document.body.firstElementChild);
+
+    // dbclick rename
+
+    description.addEventListener('dblclick' , () => {
+        const div = document.createElement('div');
+        div.className = 'rename-panel';
+        const inputChange = document.createElement('input');
+        const btn = document.createElement('button');
+
+        
+        div.appendChild(inputChange);
+        div.appendChild(btn);
+        btn.textContent = 'Change';
+
+        document.body.appendChild(div);
+
+        btn.addEventListener('click', () => {
+            description.textContent = inputChange.value;
+            div.remove();
+        });
+    });
+
+    // удалить таймер 
+    deleteBtn.addEventListener('click', () =>{
+        timer.remove();
+    });
+
+    stopBtn.addEventListener('click', () => {
+        stopBtn.textContent = stopBtn.textContent === 'Start' ? 'Stop' : 'Start';
+        if(stopBtn.textContent === 'Start') {
+            clearInterval(countdown);
+        } else {
+            countdown = resumeTimer();
+        }
+    });
   // end shell timer 
 
 
-    setInterval(() => {
-        if (secondsAcc === 0) return clearInterval();
-        secondsAcc--;
-
-        defineClock();
-        clock.textContent = clockHour + ': ' + clockMin + ': ' + clockSec;
-    }, 1000);
-
+    let countdown = resumeTimer();
   // start calculates formulas  
     function defineClock() {
         clockHour = addZero(parseInt(secondsAcc / 3600));
@@ -96,14 +99,25 @@ const makeTimer = secondsAcc => {
         clockSec = addZero(secondsAcc % 60);
     }
  // end calculates formulas
- 
+
     function addZero(n) {
         return n < 10 ? '0' + n : n;
     }
 
-    if (min.value && sec.value === '') startBtn.disabled = true;
     id++;
 
+ // resume timer function
+    function resumeTimer() {
+        return setInterval(() => {
+            if (secondsAcc === 0) return clearInterval();
+            secondsAcc--;
+    
+            defineClock();
+            clock.textContent = clockHour + ': ' + clockMin + ': ' + clockSec;
+        }, 1000);
+    
+    }
+ // end resume timer function
 };
 
 startBtn.addEventListener('click', () => {
