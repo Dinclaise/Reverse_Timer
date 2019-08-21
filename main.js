@@ -13,10 +13,13 @@ const inputs = document.querySelectorAll('input');
 inputs.forEach(elem => {
     startBtn.disabled = true;
     elem.addEventListener('keyup', () => {
-        Number(elem.value > 0) ? startBtn.disabled = false : startBtn.disabled = true ;
+        if (!isNaN(min.value * 1) && !isNaN(sec.value * 1)) {
+            startBtn.disabled = false;
+        } else {
+            startBtn.disabled = true;
+        }
     });
 });
-
 
 function UnblockButton() {
     if (min.value || sec.value === Number)
@@ -36,8 +39,9 @@ const makeTimer = secondsAcc => {
     clock.textContent = clockHour + ': ' + clockMin + ': ' + clockSec;
     timer.appendChild(clock);
 
-    const description = document.createElement('p');
-    description.textContent = text.value;
+    const description = document.createElement('input');
+    description.className = 'timer-name';
+    description.value = text.value;
     timer.insertBefore(description, timer.firstElementChild);
 
 
@@ -56,24 +60,25 @@ const makeTimer = secondsAcc => {
 
     // dbclick rename
 
-    description.addEventListener('dblclick' , () => {
-        const div = document.createElement('div');
-        div.className = 'rename-panel';
-        const inputChange = document.createElement('input');
-        const btn = document.createElement('button');
+    // description.addEventListener('dblclick' , () => {
+    //     description.value = description.value;
+        // const div = document.createElement('div');
+        // div.className = 'rename-panel';
+        // const inputChange = document.createElement('input');
+        // const btn = document.createElement('button');
 
         
-        div.appendChild(inputChange);
-        div.appendChild(btn);
-        btn.textContent = 'Change';
+        // div.appendChild(inputChange);
+        // div.appendChild(btn);
+        // btn.textContent = 'Change';
 
-        document.body.appendChild(div);
+        // document.body.appendChild(div);
 
-        btn.addEventListener('click', () => {
-            description.textContent = inputChange.value;
-            div.remove();
-        });
-    });
+        // btn.addEventListener('click', () => {
+        //     description.textContent = inputChange.value;
+        //     div.remove();
+        // });
+    // });
 
     // удалить таймер 
     deleteBtn.addEventListener('click', () =>{
