@@ -1,7 +1,19 @@
+html {
+    font-size: 62.5%;
+}
+
 body {
     box-sizing: border-box;
 }
-    
+
+.progress-bar {
+    height: .5rem;
+    width: 0%;
+    background-color: greenyellow;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
     
 #requestID {
     width: 400px;

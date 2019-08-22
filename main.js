@@ -5,6 +5,8 @@ const min = document.getElementById('minutesID');
 const sec = document.getElementById('secondsID');
 const text = document.getElementById('requestID');
 
+const progress = document.querySelector('.progress-bar');
+
 const startBtn = document.getElementById('start');
 // const deleteBtn = document.getElementById('delete');
 
@@ -113,16 +115,34 @@ const makeTimer = secondsAcc => {
 
  // resume timer function
     function resumeTimer() {
+        progressBar(secondsAcc);
         return setInterval(() => {
             if (secondsAcc === 0) return clearInterval();
             secondsAcc--;
     
             defineClock();
+            
             clock.textContent = clockHour + ': ' + clockMin + ': ' + clockSec;
         }, 1000);
     
     }
  // end resume timer function
+
+
+ function progressBar(secondsAcc) {
+    let percent = 0;
+    let secVal = secondsAcc / 100;
+    let a = setInterval(() => {
+        percent += secVal;
+        progress.style.width = percent + '%';
+       if (Math.round(Number(progress.style.width.replace('%', '')))=== 100) {
+           clearInterval(a);
+           progress.style.width = '100%';
+       }
+        // progress.textContent = progress.style.width;
+    }, secondsAcc);
+ }
+ 
 };
 
 startBtn.addEventListener('click', () => {
